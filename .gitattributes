@@ -1,2 +1,3 @@
 .idea/*
 tmp/*
+.php_cs.cache
