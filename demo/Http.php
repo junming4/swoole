@@ -58,7 +58,9 @@ class Http
      */
     public function onReceive(Swoole_http_server $server, $fd, $from_id, $data)
     {
-        if(strlen($data)>0 ) echo "客户端发来数据为:{$data}\n";
+        if (strlen($data)>0) {
+            echo "客户端发来数据为:{$data}\n";
+        }
         $server->send($fd, $data, $from_id);
     }
 
