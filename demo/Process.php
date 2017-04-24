@@ -88,18 +88,34 @@ class Process
      */
     public function onReceive(swoole_server $server, $fd, $from_id = 0, $data)
     {
+        $data = trim($data);
         if (empty($data)) {
             return false;
         }
         echo "客户端{$fd}发来消息为：{$data}";
-        //$server->send($fd, "你发出的信息为:{$data}");
+
+
+        if ($data == 'exit') { //关闭客户端部分
+            echo "bii\n";
+            $server->stop();//断掉客户端的work，断掉一个客户端
+            //$this->server->stop(); //断掉所有客户端
+        } //停止work
+
+        if($data == 'die'){ //关闭服务端开始
+            echo  "你发送关闭服务端指令!";
+            //也可以使用 这个代替（不明白什么意思） ： kill -15 主进程PID
+            $server->shutdown();
+        }
+
+
+        $server->send($fd, "你发出的信息为:{$data}");
 
         //todo 为什么这个connection 使用不了？无法检测有这些数据
-        $conn_list = $this->server->connections;
+        $conn_list = $server->connections;
 
         file_put_contents('../tmp/swoole.log', json_encode($conn_list),FILE_APPEND);
 
-        $this->processObj->write($data);
+        //$this->processObj->write($data);
     }
 
     /**
