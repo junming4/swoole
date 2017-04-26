@@ -32,8 +32,7 @@ class Process
         $this->server->on('Receive', [$this, 'onReceive']);
         $this->server->on('Close', [$this, 'onClose']);
 
-        $this->processObj = new swoole_process(function($process) {
-
+        $this->processObj = new swoole_process(function ($process) {
             $start_fd = 0;
             while (true) {
                 $msg = $process->read();
@@ -46,7 +45,7 @@ class Process
                     echo "finish\n";
                     break;
                 }
-                foreach($conn_list as $conn) {
+                foreach ($conn_list as $conn) {
                     //file_put_contents('../tmp/swoole.log', "数据连接为:{$conn};内容为：".$msg."\n",FILE_APPEND);
                     $this->server->send($conn, $msg);
                 }
@@ -101,7 +100,7 @@ class Process
             //$this->server->stop(); //断掉所有客户端
         } //停止work
 
-        if($data == 'die'){ //关闭服务端开始
+        if ($data == 'die') { //关闭服务端开始
             echo  "你发送关闭服务端指令!";
             //也可以使用 这个代替（不明白什么意思） ： kill -15 主进程PID
             $server->shutdown();
@@ -113,7 +112,7 @@ class Process
         //todo 为什么这个connection 使用不了？无法检测有这些数据
         $conn_list = $server->connections;
 
-        file_put_contents('../tmp/swoole.log', json_encode($conn_list),FILE_APPEND);
+        file_put_contents('../tmp/swoole.log', json_encode($conn_list), FILE_APPEND);
 
         //$this->processObj->write($data);
     }

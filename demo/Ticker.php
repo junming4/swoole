@@ -63,7 +63,9 @@ class Ticker
     public function onReceive(swoole_server $server, $fd, $from_id = 0, $data)
     {
         $data = trim($data);
-        if (strlen($data) < 1) return false;
+        if (strlen($data) < 1) {
+            return false;
+        }
 
         echo "客户端{$fd}发送{$data}过来\n";
         $server->send($fd, "你发送到服务器的数据为:{$data}\n");
@@ -89,9 +91,7 @@ class Ticker
             $server->tick(1000, function ($id) {
                 var_dump($id);
             });
-        }
-        else
-        {
+        } else {
             $server->addtimer(1000);
         }
     }
@@ -105,10 +105,6 @@ class Ticker
     {
         echo "客户端{$fd}断开服务器\n";
     }
-
-
-
-
 }
 
 $ticker = new Ticker();
