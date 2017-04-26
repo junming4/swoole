@@ -20,14 +20,14 @@ class Conn
     public function __construct()
     {
         $this->server = new swoole_server('127.0.0.1', 9501, SWOOLE_BASE, SWOOLE_SOCK_TCP);
-        $this->set([
+        $this->server->set([
             'worker_num' => 8,
             'daemonize' => false, //1表示在后台守护进程
         ]);
-        $this->on('Start', [$this, 'onStart']);
-        $this->on('Connect', [$this, 'onConnect']);
-        $this->on('Receive', [$this, 'onReceive']);
-        $this->on('Close', [$this, 'onClose']);
+        $this->server->on('Start', [$this, 'onStart']);
+        $this->server->on('Connect', [$this, 'onConnect']);
+        $this->server->on('Receive', [$this, 'onReceive']);
+        $this->server->on('Close', [$this, 'onClose']);
         $this->server->start();
     }
 
@@ -66,6 +66,10 @@ class Conn
         }
         echo "客户端ID为：{$fd}发来消息为:{$data}\n";
         $server->send($fd, $data . "\n");
+
+        $info = $server->connection_info($fd);
+        file_put_contents('../tmp/connect.log', json_encode($info));
+
     }
 
     /**
