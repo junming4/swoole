@@ -75,9 +75,6 @@ class Conn
 
         //$server->bind($fd, 100);
         file_put_contents('../tmp/connect.log', json_encode($server->stats()));
-
-
-
     }
 
     /**
