@@ -67,8 +67,16 @@ class Conn
         echo "客户端ID为：{$fd}发来消息为:{$data}\n";
         $server->send($fd, $data . "\n");
 
-        $info = $server->connection_info($fd);
-        file_put_contents('../tmp/connect.log', json_encode($info));
+        /*$info = $server->connection_info($fd);
+        file_put_contents('../tmp/connect.log', json_encode($info));*/
+
+        /*$conn_list = $this->server->connection_list(0, 10);
+        file_put_contents('../tmp/connect.log', json_encode($conn_list));*/
+
+        //$server->bind($fd, 100);
+        file_put_contents('../tmp/connect.log', json_encode($server->stats()));
+
+
 
     }
 
