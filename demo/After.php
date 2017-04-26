@@ -71,7 +71,26 @@ class After
         echo "客户端ID为：{$fd}发来消息为:{$data}\n";
         $server->send($fd, $data."\n");
         //$server->task($data . '-' . $fd);
-        $server->after(1000, [$this,'afterSend']);
+        //$server->after(1000, [$this,'afterSend']);
+
+        //延迟执行函数
+       /* $fd = $server->defer(function () use ($fd){
+            return $fd*2;
+        });
+        echo $fd."\n";*/
+
+
+        //清除定时器
+        $timer_id = $server->tick(1000, function ($id) use ($server) {
+            echo "数据id：{$id}\n";
+            /*if($id >10) {
+                echo "清除定时器\n";
+                $server->clearTimer($id);
+            }*/
+        });
+        echo $timer_id."\n";
+
+
     }
 
 
