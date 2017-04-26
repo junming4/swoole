@@ -89,8 +89,6 @@ class After
             }*/
         });
         echo $timer_id."\n";
-
-
     }
 
 
