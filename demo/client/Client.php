@@ -39,6 +39,10 @@ class Client
     public function onConnect(swoole_client $clientObj)
     {
         $clientObj->send("GET / HTTP/1.1\r\n\r\n");
+
+        if($clientObj->isConnected()){
+            echo "已经连接上了服务器了.\n";
+        }
     }
 
     /**
@@ -47,6 +51,7 @@ class Client
      */
     public function onReceive(swoole_client $clientObj, $data)
     {
+        var_dump($clientObj->getsockname());
         echo "Receive: $data";
         $clientObj->send(str_repeat('A', 100) . "\n");
         sleep(1);
