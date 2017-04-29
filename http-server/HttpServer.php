@@ -19,7 +19,7 @@ class HttpServer
      */
     public function __construct()
     {
-        $this->server = new swoole_http_server('127.0.0.1', 9051);
+        $this->server = new swoole_http_server('127.0.0.1', 9501);
         $this->server->on('request', [$this, 'onRequest']);
         $this->server->start();
     }
