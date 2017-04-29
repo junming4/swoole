@@ -30,7 +30,7 @@ class Client
 
         //$flag参数在TCP类型,$flag=1表示设置为非阻塞socket，connect会立即返回。
         //如果将$flag设置为1，那么在send/recv前必须使用swoole_client_select来检测是否完成了连接
-        $this->clientObj->connect('127.0.0.1', 9501 ,0.1, 1);
+        $this->clientObj->connect('127.0.0.1', 9501, 0.1, 1);
     }
 
     /**
@@ -40,7 +40,7 @@ class Client
     {
         $clientObj->send("GET / HTTP/1.1\r\n\r\n");
 
-        if($clientObj->isConnected()){
+        if ($clientObj->isConnected()) {
             echo "已经连接上了服务器了.\n";
         }
     }

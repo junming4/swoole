@@ -47,13 +47,11 @@ class Task
         $server->task("some_data");
 
         //$connections属性是一个迭代器对象，不是PHP数组，所以不能用var_dump或者数组下标来访问，只能通过foreach进行遍历操作
-        foreach($server->connections as $fd)
-        {
+        foreach ($server->connections as $fd) {
             $server->send($fd, "hello:{$fd}\n");
         }
 
         //echo "当前服务器共有 ".count($server->connections). " 个连接\n";
-
     }
 
     /**
