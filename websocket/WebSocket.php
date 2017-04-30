@@ -23,6 +23,7 @@ class WebSocket
         $this->server->on('open', [$this, 'onOpen']);
         $this->server->on('message', [$this, 'onMessage']);
         $this->server->on('close', [$this, 'onClose']);
+        $this->server->start();
     }
 
     /**
@@ -31,7 +32,7 @@ class WebSocket
      */
     public function onOpen(swoole_websocket_server $server, $request)
     {
-        echo "server: handshake success with fd{$request->fd}\n";
+        echo "{$request->get['from_id']}server: handshake success with fd{$request->fd}\n";
     }
 
     /**
@@ -41,7 +42,15 @@ class WebSocket
     public function onMessage(swoole_websocket_server $server, $frame)
     {
         echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+
+        //广播所有在线的
+        foreach($server->connections as $conn){
+            $server->push($conn, "this is server");
+        }
+
         $server->push($frame->fd, "this is server");
+
+
     }
 
     /**
@@ -53,3 +62,6 @@ class WebSocket
         echo "client {$fd} closed\n";
     }
 }
+
+$webSocket = new WebSocket();
+
