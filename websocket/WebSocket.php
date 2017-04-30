@@ -44,13 +44,11 @@ class WebSocket
         echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
 
         //广播所有在线的
-        foreach($server->connections as $conn){
+        foreach ($server->connections as $conn) {
             $server->push($conn, "this is server");
         }
 
         $server->push($frame->fd, "this is server");
-
-
     }
 
     /**
@@ -64,4 +62,3 @@ class WebSocket
 }
 
 $webSocket = new WebSocket();
-
