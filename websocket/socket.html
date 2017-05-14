@@ -32,6 +32,9 @@
         document.getElementById('text').value = '';
         //向服务器发送数据
         websocket.send(text);
+
+        //可以改为下面这种格式的
+        //websocket.send('{"infoType": 100001,"connectionType": 2,"data":{"token":"","userId":2}}#$#');
     }
     //监听连接关闭
     //  websocket.onclose = function (evt) {
